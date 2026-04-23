@@ -145,6 +145,177 @@
       ["He saw a movie last August in theaters. It was so intense, he was on the edge of his seat the whole time.", "He saw a Fall thriller."],
       ["He once met a really cool dude. He was 6'6\" and super slick.", "He met a tall chiller."],
       ["He had a friend who was barely 5 foot and cooked with propane all the time.", "He knew a small griller."],
+      ["He hangs up in the middle of phone calls all the time, and just cuts the other guy off completely.", "Some call him a call killer."],
+      ["He once bought fish from a guy who would drag a big net through the water to catch them, and then charge you for it.", "He was a trawl biller."],
+      ["One day, he watched a moth eat all the way through a big fabric scarf.", "He saw a shawl driller."],
+      ["He had a friend named Jimmy McGill, who had been sick for a while. He was starting to get better, but then Paul coughed and his friend got worse again.", "He made Saul iller."],
+      ["He once met a salesman who kept trying to sell him big brick barriers. He was really shameless about it.", "He met a wall shiller."]
+    ];
+
+    var current = paulMiller;
+    var bag = [];
+
+    function shuffleBag() {
+      bag = stories.slice();
+      for (var i = bag.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = bag[i]; bag[i] = bag[j]; bag[j] = temp;
+      }
+      // Prevent the first story in the new bag from matching the current one
+      if (bag[bag.length - 1] === current && bag.length > 1) {
+        var temp = bag[bag.length - 1]; bag[bag.length - 1] = bag[0]; bag[0] = temp;
+      }
+    }
+
+    function drawFromBag() {
+      if (bag.length === 0) shuffleBag();
+      return bag.pop();
+    }
+
+    function fullReset() {
+      current = paulMiller;
+      bag = [];
+      document.getElementById("setup").innerText = "";
+      document.getElementById("punchline").innerHTML = "";
+      document.getElementById("buttons").innerHTML = '<button class="fadein" onclick="revealCurrent()">Tell me more</button>';
+    }
+
+    function revealCurrent() {
+      var isOriginal = (current === paulMiller);
+      document.getElementById("punchline").innerHTML = '<p class="fadein">' + current[1] + "</p>";
+      document.getElementById("buttons").innerHTML = "";
+      setTimeout(function() {
+        var buttons = '<button class="fadein" onclick="nextStory()">Tell me another story</button>';
+        if (!isOriginal) {
+          buttons += ' <button class="fadein" onclick="fullReset()">What was his name?</button>';
+        }
+        document.getElementById("buttons").innerHTML = buttons;
+      }, 1500);
+    }
+
+    function nextStory() {
+      current = drawFromBag();
+      document.getElementById("setup").innerText = current[0];
+      document.getElementById("punchline").innerHTML = "";
+      document.getElementById("buttons").innerHTML = '<button class="fadein" onclick="revealCurrent()">Tell me more</button>';
+    }
+
+    fullReset();
+  </script>
+
+</body>
+</html>
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: -8px;
+      bottom: -8px;
+      border: 1px solid rgba(90, 130, 180, 0.15);
+      border-radius: 2px;
+      z-index: -1;
+    }
+
+    .label {
+      font-family: 'Crimson Pro', serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #4a7aaa;
+      margin-bottom: 20px;
+    }
+
+    #headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: #0d1a2a;
+      margin-bottom: 8px;
+    }
+
+    #setup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #2a3f55;
+      margin-top: 16px;
+      min-height: 0;
+    }
+
+    #punchline p {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 22px;
+      color: #2c5f8a;
+      margin-top: 28px;
+      line-height: 1.5;
+      padding-top: 24px;
+      border-top: 1px solid rgba(90, 130, 180, 0.25);
+    }
+
+    #buttons {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      font-family: 'Crimson Pro', serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      padding: 10px 24px;
+      border: 1px solid #4a7aaa;
+      border-radius: 1px;
+      background: transparent;
+      color: #2c5f8a;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    button:hover {
+      background: #4a7aaa;
+      color: #f7fafd;
+    }
+
+    .fadein {
+      animation: fadein 1s ease-in;
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <p class="label">A Tau Delt Tale</p>
+    <p id="headline">This is a story about a guy.</p>
+    <p id="setup"></p>
+    <div id="punchline"></div>
+    <div id="buttons"></div>
+  </div>
+
+  <script>
+    var paulMiller = ["", "His name was Paul Miller."];
+
+    var stories = [
+      ["One day, he went to his local shopping center, and saw that there was a massive overhang. He was amazed by how it hadn't collapsed, but then saw that it was held up by a massive column.", "It was a mall pillar."],
+      ["When he was younger, he used to play soccer. The balls would often deflate though, and so there was one person whose job it was to re-inflate them.", "He was the ball filler."],
+      ["One time, he tried to watch Bleach, but quickly got bored and quit.", "It was all filler."],
+      ["He saw a movie last August in theaters. It was so intense, he was on the edge of his seat the whole time.", "He saw a Fall thriller."],
+      ["He once met a really cool dude. He was 6'6\" and super slick.", "He met a tall chiller."],
+      ["He had a friend who was barely 5 foot and cooked with propane all the time.", "He knew a small griller."],
       ["He hangs up in the middle of phone calls all the time, and just cuts the other guy off completely.", "Some call him a call killer."]
     ];
 
